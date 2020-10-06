@@ -1,12 +1,43 @@
+/* LAYOUT STYLES */
 .container {
-  text-align: center;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 10px;
 }
+
+.header {
+  text-align: center;
+}
+
+/* COMPONENT STYLES */
+.btn,
+.btn:link,
+.btn:visited {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: transparent;
+  transition: box-shadow 0.1s ease-in, transform 0.3ms linear;
+  border: 1px solid black;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn:not(:last-child) {
+  margin-right: 8px;
+}
+
+.btn:active,
+.btn:hover {
+  box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.3), inset 0 0 2px red;
+  transform: scale(1.5);
+}
+
+/* IMAGE STYLES */
 
 .image-grid {
   display: grid;
-  margin: 10px;
   gap: 10px;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
@@ -14,9 +45,113 @@
 .image-item:nth-child(5n) {
   grid-column-end: span 2;
 }
+
 img {
   display: flex;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* PAGINATION */
+
+.pagination {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.pagination__result-wrapper {
+  margin-right: 20px;
+  font-weight: lighter;
+}
+.pagination__result {
+  font-weight: bold;
+}
+
+.pagination__result:not(:last-child) {
+  margin-right: 10px;
+}
+
+.pagination__controls {
+}
+
+/* SEARCH */
+
+.search {
+  margin-bottom: 10px;
+}
+
+.search__input {
+  padding: 6px 8px;
+  background-color: transparent;
+  border: 2px solid black;
+  border-radius: 3px;
+  width: 500px;
+}
+
+.search__input:focus {
+  box-shadow: inset 0 0 3px red;
+}
+
+.search__button {
+  margin-left: 20px;
+}
+
+/* CONTROLS */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+/* SPINNER */
+.spinner {
+  position: relative;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner__square {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: circle linear infinite 3s;
+}
+
+.spinner__square::before,
+.spinner__square::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-width: 3px;
+  transition: transform 0.5s linear;
+}
+
+.spinner__square::before {
+  border-style: dotted;
+  border-color: black;
+  transform: rotate(0deg);
+}
+
+.spinner__square::after {
+  border-style: dashed;
+  border-color: rgba(255, 0, 0, 0.5);
+  transform: rotate(45deg);
+}
+
+@keyframes circle {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }

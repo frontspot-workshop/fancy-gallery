@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 
-import { MemoriziedImage, Pagination } from "./components";
+import { Image, Pagination, Spinner } from "./components";
 import { useImages } from "./hooks";
 
 function Main() {
-  const { images = [], setPage, setQuery, page } = useImages();
+  const {
+    images = [],
+    setPage,
+    setQuery,
+    page,
+    isLoading,
+    triggerLoad,
+  } = useImages();
   const [searchValue, setSearchValue] = useState("");
   const imagesIsArray = Array.isArray(images);
   const data = imagesIsArray ? images : images.results;
@@ -16,9 +23,11 @@ function Main() {
     setSearchValue(event.target.value);
   }
 
-  function handleSearchClick() {
+  function handleSubmitForm(event) {
+    event.preventDefault();
     setPage(1);
     setQuery(searchValue);
+    triggerLoad();
   }
 
   return (
@@ -26,25 +35,37 @@ function Main() {
       <header className="header">
         <h1>Fancy Gallery</h1>
       </header>
-      <div>
-        <input type="text" value={searchValue} onChange={handleInputChange} />
-        <button onClick={handleSearchClick}>Search</button>
+      <div className="controls">
+        <form className="search" onSubmit={handleSubmitForm}>
+          <input
+            className="search__input"
+            type="text"
+            value={searchValue}
+            onChange={handleInputChange}
+          />
+          <button type="submit" className="btn search__button">
+            Search
+          </button>
+        </form>
+
+        <Pagination
+          onPaginationClick={(page) => {
+            triggerLoad();
+            setPage(page);
+          }}
+          page={page}
+          {...pagination}
+        />
       </div>
-      <Pagination onPaginationClick={setPage} page={page} {...pagination} />
-      {!imagesIsArray && (
-        <div>
-          <h2>
-            <span>Total: {images.total} </span>---
-            <span>Total pages: {images.total_pages} </span>
-          </h2>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div className="image-grid">
+          {data.map((image) => (
+            <Image.Memorizied key={image.id} image={image} />
+          ))}
         </div>
       )}
-
-      <div className="image-grid">
-        {data.map((image) => (
-          <MemoriziedImage key={image.id} image={image} />
-        ))}
-      </div>
     </div>
   );
 }
