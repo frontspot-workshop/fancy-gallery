@@ -1,0 +1,17 @@
+.page-element{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 1px solid red;
+    background-color: lightblue;
+    margin: 2px;
+    color: black;
+    cursor: pointer;
+}
+
+.page-element.active{
+    background-color: blue;
+    color: white;
+    transition: 0.2s;
+}
+

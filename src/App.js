@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {ACCESS_KEY, API_URL} from './credentials';
 import axios from 'axios';
 import './App.css';
+import Pagination from "./components/pagination";
 
 function App() {
     const [images, setImages] = useState([]);
@@ -57,6 +58,12 @@ function App() {
         setQuery(newQuery);
     }
 
+    const totalPages = 10;
+
+    const handlePaginationClick = () => {
+
+    }
+
     return (
         <div className="container">
             <header className="header">
@@ -68,6 +75,10 @@ function App() {
                 <button onClick={()=>handleClick('react')}>React</button>
                 <button onClick={()=>handleClick('')}>Random</button>
             </div>
+            <Pagination
+                totalPages={totalPages}
+                handlePaginationClick={handlePaginationClick}
+            />
             <div className="image-grid">
                 {images.map(image => {
                     const {id, alt_description, urls, color} = image;
