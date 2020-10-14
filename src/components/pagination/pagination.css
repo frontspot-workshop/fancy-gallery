@@ -2,16 +2,28 @@
     display: inline-block;
     width: 40px;
     height: 40px;
-    border: 1px solid red;
+/*    border: 1px solid red;*/
+    border-radius: 5px;
     background-color: lightblue;
     margin: 2px;
     color: black;
     cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px
 }
 
 .page-element.active{
     background-color: blue;
     color: white;
     transition: 0.2s;
+}
+
+.hidden{
+    display: none;
+}
+
+.pagination-block{
+    padding: 20px;
 }
 

@@ -1,43 +1,61 @@
-import React, {Component} from "react";
+import React from "react";
 import './pagination.css'
+import getPaginationClasses from "./get-pagination-classes";
 
-class Pagination extends Component {
+const Pagination = props => {
+    const {lastPage, handlePaginationClick, currentPage} = props;
+    const firstPage = 1;
+    const previousPage = currentPage - 1;
+    const nextPage = currentPage + 1;
+    const pageElementClass = "page-element ";
+    console.log("Current page ", currentPage)
+    const {
+        leftStepClass,
+        firstPageClass,
+        leftGapClass,
+        previousPageClass,
+        currentPageClass,
+        nextPageClass,
+        rightGapClass,
+        lastPageClass,
+        rightStepClass
+    } = getPaginationClasses(firstPage, currentPage, lastPage, pageElementClass)
 
-    state = {
-        currentButtonId: 1
-    }
 
-    handlePaginationClick = (i) => {
-        console.log(i)
-        this.setState({
-            currentButtonId: i,
-        })
-    }
+    let pageElements = [
+        <div id="left-step" key="left-step" className={leftStepClass}
+             onClick={() => handlePaginationClick(previousPage)}>{"<"}</div>,
 
-    render() {
-        const {totalPages} = this.props;
+        <div id="first-page" key="first-page" className={firstPageClass}
+             onClick={() => handlePaginationClick(firstPage)}>{firstPage}</div>,
 
-        let pageElements = [];
+        <div id="left-gap" key="left-gap" className={leftGapClass}
+             onClick={() => handlePaginationClick(previousPage - 1)}>{"..."}</div>,
 
-        let pageElementClass;
-        for (let i = 1; i <= totalPages; i++) {
-            if (this.state.currentButtonId === i) {
-                pageElementClass = "page-element active"
-            } else {
-                pageElementClass = "page-element"
-            }
-            pageElements.push(
-                <div id={i} key={i} className={pageElementClass}
-                     onClick={() => this.handlePaginationClick(i)}>{i}</div>
-            )
-        }
+        <div id="previous-page" key="previous-page" className={previousPageClass}
+             onClick={() => handlePaginationClick(previousPage)}>{previousPage}</div>,
 
-        return (
-            <div className="pagination-block">
-                {pageElements}
-            </div>
-        )
-    }
+        <div id="current-page" key="current-page" className={currentPageClass}
+             onClick={() => handlePaginationClick(currentPage)}>{currentPage}</div>,
+
+        <div id="next-page" key="next-page" className={nextPageClass}
+             onClick={() => handlePaginationClick(nextPage)}>{nextPage}</div>,
+
+        <div id="right-gap" key="right-gap" className={rightGapClass}
+             onClick={() => handlePaginationClick(nextPage + 1)}>{"..."}</div>,
+
+        <div id="last-page" key="last-page" className={lastPageClass}
+             onClick={() => handlePaginationClick(lastPage)}>{lastPage}</div>,
+
+        <div id="right-step" key="right-step" className={rightStepClass}
+             onClick={() => handlePaginationClick(nextPage)}>{">"}</div>
+    ];
+
+    return (
+        <div className="pagination-block">
+            {pageElements}
+        </div>
+    )
 }
 
 export default Pagination;

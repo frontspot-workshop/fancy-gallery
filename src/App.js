@@ -12,21 +12,21 @@ function App() {
 
 
     const fetchImages = () => {
-        axios.get(`${API_URL}/photos/?client_id=${ACCESS_KEY}&per_page=40&page=${page}`)
+        axios.get(`${API_URL}/photos/?client_id=${ACCESS_KEY}&per_page=10&page=${page}`)
             .then(res => setImages([...images, ...res.data]));
     };
 
     const searchImages = () => {
-        axios.get(`${API_URL}/search/photos/?client_id=${ACCESS_KEY}&per_page=40&page=${page}&query=${query}`)
+        axios.get(`${API_URL}/search/photos/?client_id=${ACCESS_KEY}&per_page=10&page=${page}&query=${query}`)
             .then(res => setImages([...images, ...res.data.results]));
     };
 
     const handleObserver = entities => {
-        const target = entities[0];
+         const target = entities[0];
 
-        if (target.intersectionRatio > 0) {
+        /*if (target.intersectionRatio > 0) {
             setPage(page => page + 1)
-        }
+        }*/
     };
 
     useEffect(() => {
@@ -60,8 +60,10 @@ function App() {
 
     const totalPages = 10;
 
-    const handlePaginationClick = () => {
-
+   const handlePaginationClick = (nextPage) => {
+        console.log("click page #" + nextPage)
+       setImages([]);
+       setPage(nextPage)
     }
 
     return (
@@ -76,8 +78,9 @@ function App() {
                 <button onClick={()=>handleClick('')}>Random</button>
             </div>
             <Pagination
-                totalPages={totalPages}
+                lastPage={totalPages}
                 handlePaginationClick={handlePaginationClick}
+                currentPage={page}
             />
             <div className="image-grid">
                 {images.map(image => {
