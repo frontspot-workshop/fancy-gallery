@@ -9,6 +9,12 @@ import "fontsource-roboto";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    "& img":{
+      display: "flex",
+      width: "100%",
+      height: "100%",
+      objectFit: "cover"
+    }
   },
   paper: {
     padding: theme.spacing(2),
@@ -21,34 +27,46 @@ const useStyles = makeStyles((theme) => ({
   },
   tags: {
     background:"white"
+  },
+  imageGrid:{
+    display: "grid",
+    margin: "10px",
+    gap: "10px",
+    gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))"
+  },
+  imageItem:{
+    "&:nth-child(5n)": {
+      gridColumnEnd: "span 2"    
+    }
   }
 }));
 
 function App() {
+
+  const TAGS = ["Cats", "Dogs", "Coffee", "React", ""];
+  const IMAGES_PER_PAGE = 20;
+
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalImages, setTotalImages] = useState(0);
-  const [imagesPerPage] = useState(20);
   const [query, setQuery] = useState("");
-  const [tags] = useState(["Cats", "Dogs", "Coffee", "React", ""]);
   const classes = useStyles();
 
   useEffect(() => {
+    const searchImages = () => {
+      axios
+        .get(
+          `${API_URL}?key=${ACCESS_KEY}&q=${query}&page=${page}&per_page=${IMAGES_PER_PAGE}&image_type=photo`
+        )
+        .then((response) => {
+          setImages(response.data.hits);
+          setTotalImages(response.data.totalHits);
+          setTotalPages(Math.ceil(response.data.totalHits / IMAGES_PER_PAGE));
+        });
+    }
     searchImages();
-  }, [page, query, imagesPerPage, totalImages]);
-
-  const searchImages = () => {
-    axios
-      .get(
-        `${API_URL}?key=${ACCESS_KEY}&q=${query}&page=${page}&per_page=${imagesPerPage}&image_type=photo`
-      )
-      .then((response) => {
-        setImages(response.data.hits);
-        setTotalImages(response.data.totalHits);
-        setTotalPages(Math.ceil(response.data.totalHits / imagesPerPage));
-      });
-  };
+  }, [page, query]);
 
   const handleTagClick = (event, newQuery) => {
     if (newQuery !== query) {
@@ -76,9 +94,9 @@ function App() {
             onChange={handleTagClick}
             aria-label="Image tags"
           >
-            {tags.map((tag) => {
+            {TAGS.map((tag) => {
               return (
-                <ToggleButton value={tag} aria-label={{ tag } + " images"}>
+                <ToggleButton key={tag} value={tag} aria-label={{ tag } + " images"}>
                   {tag === "" ? "Random" : tag}
                 </ToggleButton>
               );
@@ -91,12 +109,12 @@ function App() {
 
       <Grid container>
         <Grid item xs={12}>
-          <Paper className="image-grid">
+          <Paper className={classes.imageGrid}>
             {images.map((image) => {
               const { id, webformatURL, tags } = image;
               return (
                 <div
-                  className="image-item"
+                  className={classes.imageItem}
                   key={id}
                   style={{ backgroundColor: "grey" }}
                 >
@@ -109,27 +127,14 @@ function App() {
         <Grid item xs={12} container justify="center">
           <Paper className={classes.paper} elevation={0}>
             <Badge color="secondary" badgeContent={totalImages} max={999}>
-              {query === "" && (
-                <Pagination
-                  className="pages"
-                  count={totalPages}
-                  showFirstButton
-                  showLastButton
-                  page={page}
-                  variant="outlined"
-                  onChange={handleChangePage}
-                />
-              )}
-              {query !== "" && (
-                <Pagination
-                  className="pages"
-                  count={totalPages}
-                  showFirstButton
-                  page={page}
-                  variant="outlined"
-                  onChange={handleChangePage}
-                />
-              )}
+              <Pagination
+                count={totalPages}
+                showFirstButton
+                showLastButton = {!!query}
+                page={page}
+                variant="outlined"
+                onChange={handleChangePage}
+              />  
             </Badge>
           </Paper>
         </Grid>
