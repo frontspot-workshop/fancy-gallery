@@ -10,6 +10,15 @@ const getPaginationClasses = (firstPage, currentPage, lastPage, pageElementClass
     let lastPageClass = pageElementClass;
     let rightStepClass = pageElementClass;
 
+    const gapLeap = Math.ceil(lastPage/10.0);
+    let rightGapLeap = gapLeap;
+    let leftGapLeap = gapLeap;
+    if(currentPage + gapLeap + 1 > lastPage){
+          rightGapLeap = lastPage - currentPage - 2;
+      }
+    if(currentPage - gapLeap - 1 < firstPage){
+        leftGapLeap = currentPage - firstPage - 2;
+    }
 
     if (currentPage < 2) {
         leftStepClass += " hidden";
@@ -49,7 +58,9 @@ const getPaginationClasses = (firstPage, currentPage, lastPage, pageElementClass
         nextPageClass: nextPageClass,
         rightGapClass: rightGapClass,
         lastPageClass: lastPageClass,
-        rightStepClass: rightStepClass
+        rightStepClass: rightStepClass,
+        rightGapLeap: rightGapLeap,
+        leftGapLeap: leftGapLeap,
     }
 }
 

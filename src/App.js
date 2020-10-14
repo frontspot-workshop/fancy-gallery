@@ -58,12 +58,12 @@ function App() {
         setQuery(newQuery);
     }
 
-    const totalPages = 10;
+    const totalPages = 40;
 
-   const handlePaginationClick = (nextPage) => {
-        console.log("click page #" + nextPage)
+   const changeCurrentPage = (pageNumber) => {
+        console.log("click page #" + pageNumber)
        setImages([]);
-       setPage(nextPage)
+       setPage(pageNumber)
     }
 
     return (
@@ -78,8 +78,8 @@ function App() {
                 <button onClick={()=>handleClick('')}>Random</button>
             </div>
             <Pagination
-                lastPage={totalPages}
-                handlePaginationClick={handlePaginationClick}
+                totalPages={totalPages}
+                changeCurrentPage={changeCurrentPage}
                 currentPage={page}
             />
             <div className="image-grid">

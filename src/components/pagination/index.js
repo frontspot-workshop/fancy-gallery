@@ -1,10 +1,10 @@
 import React from "react";
 import './pagination.css'
 import getPaginationClasses from "./get-pagination-classes";
+const FIRST_PAGE = 1;
 
 const Pagination = props => {
-    const {lastPage, handlePaginationClick, currentPage} = props;
-    const firstPage = 1;
+    const {totalPages, changeCurrentPage, currentPage} = props;
     const previousPage = currentPage - 1;
     const nextPage = currentPage + 1;
     const pageElementClass = "page-element ";
@@ -18,37 +18,39 @@ const Pagination = props => {
         nextPageClass,
         rightGapClass,
         lastPageClass,
-        rightStepClass
-    } = getPaginationClasses(firstPage, currentPage, lastPage, pageElementClass)
+        rightStepClass,
+        rightGapLeap,
+        leftGapLeap,
+    } = getPaginationClasses(FIRST_PAGE, currentPage, totalPages, pageElementClass)
 
 
-    let pageElements = [
+    const pageElements = [
         <div id="left-step" key="left-step" className={leftStepClass}
-             onClick={() => handlePaginationClick(previousPage)}>{"<"}</div>,
+             onClick={() => changeCurrentPage(previousPage)}>{"<"}</div>,
 
         <div id="first-page" key="first-page" className={firstPageClass}
-             onClick={() => handlePaginationClick(firstPage)}>{firstPage}</div>,
+             onClick={() => changeCurrentPage(FIRST_PAGE)}>{FIRST_PAGE}</div>,
 
         <div id="left-gap" key="left-gap" className={leftGapClass}
-             onClick={() => handlePaginationClick(previousPage - 1)}>{"..."}</div>,
+             onClick={() => changeCurrentPage(previousPage - leftGapLeap)}>{"..."}</div>,
 
         <div id="previous-page" key="previous-page" className={previousPageClass}
-             onClick={() => handlePaginationClick(previousPage)}>{previousPage}</div>,
+             onClick={() => changeCurrentPage(previousPage)}>{previousPage}</div>,
 
         <div id="current-page" key="current-page" className={currentPageClass}
-             onClick={() => handlePaginationClick(currentPage)}>{currentPage}</div>,
+             onClick={() => changeCurrentPage(currentPage)}>{currentPage}</div>,
 
         <div id="next-page" key="next-page" className={nextPageClass}
-             onClick={() => handlePaginationClick(nextPage)}>{nextPage}</div>,
+             onClick={() => changeCurrentPage(nextPage)}>{nextPage}</div>,
 
         <div id="right-gap" key="right-gap" className={rightGapClass}
-             onClick={() => handlePaginationClick(nextPage + 1)}>{"..."}</div>,
+             onClick={() => changeCurrentPage(nextPage + rightGapLeap)}>{"..."}</div>,
 
         <div id="last-page" key="last-page" className={lastPageClass}
-             onClick={() => handlePaginationClick(lastPage)}>{lastPage}</div>,
+             onClick={() => changeCurrentPage(totalPages)}>{totalPages}</div>,
 
         <div id="right-step" key="right-step" className={rightStepClass}
-             onClick={() => handlePaginationClick(nextPage)}>{">"}</div>
+             onClick={() => changeCurrentPage(nextPage)}>{">"}</div>
     ];
 
     return (
