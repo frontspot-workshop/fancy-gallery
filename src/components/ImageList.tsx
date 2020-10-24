@@ -5,14 +5,14 @@ const ImageList = ({ images }: { images: Image[] }) => {
     return (
         <div className="image-grid">
             {images.map((image, index) => {
-                const { id, color, urls, alt_description } = image;
+                const { id, webformatURL, tags } = image;
                 return (
                     <div
                         className="image-item"
                         key={`${id}-${index}`}
-                        style={{ backgroundColor: color }}
+                        style={{ backgroundColor: "grey" }}
                     >
-                        <img src={urls.small} alt={alt_description} />
+                        <img src={webformatURL} alt={tags} />
                     </div>
                 );
             })}

@@ -1,2 +1,2 @@
-export const API_URL = "https://api.unsplash.com";
-export const ACCESS_KEY = "your Access Key";
+export const API_URL = "https://pixabay.com/api/";
+export const ACCESS_KEY = "your secret key";

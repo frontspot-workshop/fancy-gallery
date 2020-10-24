@@ -9,6 +9,7 @@ import { ACCESS_KEY, API_URL } from "./credentials";
 import "./App.css";
 
 const INITIAL_PAGE = 1;
+const IMAGES_PER_PAGE = 20;
 
 const useStyles = makeStyles((theme) => ({
   loading: {
@@ -31,7 +32,7 @@ function App() {
 
   const classes = useStyles();
 
-  const params = `page=${page}&per_page=20&client_id=${ACCESS_KEY}`;
+  const params = `?key=${ACCESS_KEY}&q=${query ? query : ""}&page=${page}&per_page=${IMAGES_PER_PAGE}&image_type=photo`;
 
   const handleClick = (newQuery?: string) => {
     if (newQuery !== query) {
@@ -54,12 +55,8 @@ function App() {
   useEffect(() => { if (hasIntersection) { setPage(page => page + 1) } }, [hasIntersection])
 
   useEffect(() => {
-    if (query) {
-      setPath(`${API_URL}/search/photos/?query=${query}&${params}`);
-    } else {
-      setPath(`${API_URL}/photos/?${params}`);
-    }
-  }, [query, params]);
+      setPath(`${API_URL}${params}`);
+  }, [params]);
 
   return (
     <Grid container direction="column" justify="center">

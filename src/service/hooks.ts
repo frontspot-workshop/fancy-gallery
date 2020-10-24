@@ -9,17 +9,12 @@ export const useFetchData = (path: string) => {
 
   useEffect(() => {
     if (path) {
-      const isSearch = path.includes("search");
       setLoading(true);
       setHasError(false);
       axios
         .get(path)
         .then((response) => {
-          if (isSearch) {
-            setData(response.data.results);
-          } else {
-            setData(response.data);
-          }
+          setData(response.data.hits);
           setLoading(false);
         })
         .catch(() => {
