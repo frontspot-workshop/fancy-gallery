@@ -35,7 +35,7 @@ const ImageList = ({ images }: { images: Image[] }) => {
   const { gridColsCount } = useAdaptiveGrid();
 
   const getColSpan = (index: number) : number => {
-    return (index + 1) % 5 == 0 ? 2 : 1;
+    return (index + 1) % 5 === 0 ? 2 : 1;
   }
 
   return (
