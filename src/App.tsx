@@ -7,6 +7,7 @@ import { useFetchData, useIntersectionObserver } from './service/hooks';
 import { Image } from './service/types';
 import { ACCESS_KEY, API_URL } from "./credentials";
 import "./App.css";
+import ScrollTop from "./components/ScrollTop";
 
 const INITIAL_PAGE = 1;
 const IMAGES_PER_PAGE = 20;
@@ -65,6 +66,7 @@ function App() {
       <Typography variant="h2" align="center" color="primary" className={classes.title}>{query || 'Random'}</Typography>
       {images.length > 0 && <ImageList images={images} />}
       {hasError && <Typography variant="h4" color="secondary" align="center">Something goes wrong...</Typography>}
+      <ScrollTop/>
       <div ref={loader} className={classes.loading}>{loading && <CircularProgress />}</div>
     </Grid>
   );
