@@ -57,3 +57,29 @@ export const useIntersectionObserver = () => {
 
   return { loader, hasIntersection };
 };
+
+const getColumnCount = (): number => {
+  switch (true) {
+    case window.innerWidth < 600:
+      return 1;
+    case window.innerWidth >= 600 && window.innerWidth < 960:
+      return 2;
+    case window.innerWidth >= 960 && window.innerWidth < 1280:
+      return 3;
+    default:
+      return 4;
+  }
+};
+
+export const useAdaptiveGrid = () => {
+  const [gridColsCount, setGridColsCount] = useState(getColumnCount());
+
+  useEffect(() => {
+    function handleResize() {
+      setGridColsCount(getColumnCount());
+    }
+    window.addEventListener("resize", handleResize);
+  }, []);
+
+  return { gridColsCount };
+};

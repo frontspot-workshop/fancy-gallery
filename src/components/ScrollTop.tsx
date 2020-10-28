@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import { Box, makeStyles } from "@material-ui/core";
+import { Box, makeStyles, Slide } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   scrollTop: {
@@ -19,10 +19,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       opacity: 1,
     },
-  },
-  scrollTopNone: {
-    display: "none",
-  },
+  }
 }));
 
 const ScrollTop = () => {
@@ -40,12 +37,14 @@ const ScrollTop = () => {
   window.addEventListener("scroll", setScrollTopVisibility);
 
   return (
-    <Box
-      className={showScrollTop ? classes.scrollTop : classes.scrollTopNone}
-      onClick={scrollTop}
-    >
-      <ArrowUpwardIcon />
-    </Box>
+    <Slide direction="up" in={showScrollTop} mountOnEnter unmountOnExit>
+      <Box
+        className={classes.scrollTop}
+        onClick={scrollTop}
+      >
+        <ArrowUpwardIcon />
+      </Box>
+    </Slide>
   );
 };
 

@@ -65,7 +65,7 @@ function App() {
       <Sidebar handleClick={handleClick} open={open} handleSidebarClose={handleSidebarClose} />
       <Typography variant="h2" align="center" color="primary" className={classes.title}>{query || 'Random'}</Typography>
       {images.length > 0 && <ImageList images={images} />}
-      {hasError && <Typography variant="h4" color="secondary" align="center">Something goes wrong...</Typography>}
+      {hasError && <Typography variant="h4" color="secondary" align="center">Something goes wrong...</Typography>} 
       <ScrollTop/>
       <div ref={loader} className={classes.loading}>{loading && <CircularProgress />}</div>
     </Grid>
