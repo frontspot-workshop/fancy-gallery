@@ -2,6 +2,12 @@ import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Image } from "./types";
 
+const options = {
+  root: null,
+  rootMargin: "0px",
+  threshold: 0.5,
+};
+
 export const useFetchData = (path: string) => {
   const [data, setData] = useState<Image[]>([]);
   const [loading, setLoading] = useState(false);
@@ -47,12 +53,6 @@ export const useIntersectionObserver = () => {
   };
 
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "0px",
-      treshold: 1,
-    };
-
     const observer = new IntersectionObserver(handleObserver, options);
 
     if (loader.current) {
@@ -62,3 +62,15 @@ export const useIntersectionObserver = () => {
 
   return { loader, hasIntersection };
 };
+
+export const useLazyLoading =({target, onIntersection}: any)=> {
+  useEffect(()=>{
+    const observer = new IntersectionObserver(onIntersection, options);
+    const current = target.current;
+    observer.observe(current);
+
+    return ()=> {
+      observer.unobserve(current);
+    }
+  })
+}
