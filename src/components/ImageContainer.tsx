@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         overflow: 'hidden',
         backgroundColor: 'white',
+        cursor: 'pointer',
     },
     image: {
         position: 'absolute',
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const ImageContainer = ({ image }: { image: Image }) => {
+const ImageContainer = ({ image, handleOpen }: { image: Image, handleOpen: () => void }) => {
     const { urls, alt_description, height, width, likes } = image;
     const [isVisible, setIsVisible] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -68,6 +69,7 @@ const ImageContainer = ({ image }: { image: Image }) => {
             ref={target}
             className={classes.imageContainer}
             style={{ paddingBottom: `${ratio}%` }}
+            onClick={handleOpen}
         >
             {isVisible && (
                 <>
