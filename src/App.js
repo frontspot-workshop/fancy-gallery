@@ -69,7 +69,7 @@ function App() {
   return (
     <div className="container">
       <header className="header">
-        <h1>Fancy Gallery</h1>
+        <h1>Fancy Gallery 1</h1>
       </header>
       <div className="tags">
         <button onClick={() => handleClick("cats")}>Cats</button>
